@@ -3,16 +3,22 @@ const {Schema, model} = require("mongoose")
 const bookingSchema = new Schema({
     "clinic": {
         type: Schema.Types.ObjectId,
-        ref: "Clinic"
+        ref: "Clinic",
+        required: true
     },
     "user": {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
-    "day": Date,
+    "day": {
+        type: Date,
+        required: true,
+    },
     "timeSlot": {
         type: String,
-        enum: ["09:00-12:00", "13:00-16:00", "16:00-19:00"]
+        enum: ["09:00-12:00", "13:00-16:00", "16:00-19:00"],
+        required: true
     }
 });
 
