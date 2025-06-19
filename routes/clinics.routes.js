@@ -34,6 +34,8 @@ router.get("/:clinicId", async(req,res, next) => {
 
 router.post("/:clinicId/booking", async(req,res, next) => {
 
+    const {clinicId} = req.params;
+    
     try {
         const newClinic = await Clinic.create(req.body);
         res.status(201).json(newClinic)

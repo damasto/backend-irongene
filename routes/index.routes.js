@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const {isAuthenticated} = require("../middleware/jwt.middleware")
 
 const clinicRouter = require("./clinics.routes")
-
 router.use("/clinics", clinicRouter)
 
+const bookingRouter = require("./booking.routes")
+router.use("/clinics", bookingRouter)
 
-router.get("/", (req, res, next) => {
-  res.json("All good in here");
-});
+const userRouter = require("./user.routes")
+router.use("/users", userRouter)
+
+
 
 module.exports = router;
