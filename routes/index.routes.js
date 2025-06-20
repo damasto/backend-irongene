@@ -6,7 +6,7 @@ const clinicRouter = require("./clinics.routes")
 router.use("/clinics", clinicRouter)
 
 const bookingRouter = require("./booking.routes")
-router.use("/book", bookingRouter)
+router.use("/bookings", isAuthenticated, bookingRouter)
 
 const userRouter = require("./user.routes")
 router.use("/users", userRouter)

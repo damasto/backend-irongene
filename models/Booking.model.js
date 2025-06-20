@@ -11,7 +11,7 @@ const bookingSchema = new Schema({
         ref: "User",
         required: true
     },
-    "day": {
+    "date": {
         type: Date,
         required: true,
     },
