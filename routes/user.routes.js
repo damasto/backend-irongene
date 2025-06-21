@@ -9,7 +9,7 @@ router.get("/", async(req, res, next) => {
         const users = await User.find();
         res.status(200).json(users)
     } catch(err) {
-        console.log(err)
+        next(err)
     }
 })
 
@@ -20,7 +20,7 @@ router.get("/profile/:userId", async(req, res, next) => {
         const user = await User.findById(userId);
         res.status(200).json(user)
     } catch(err) {
-        console.log(err)
+        next(err)
     }
 })
 
@@ -33,7 +33,7 @@ router.get("/profile/:userId/bookings", async(req, res, next) => {
         const bookings = await Booking.find();
         res.status(200).json(bookings)
     } catch(err) {
-        console.log(err)
+        next(err)
     }
 })
 

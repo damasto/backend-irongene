@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Booking = require("../models/Booking.model");
-const { isAuthenticated } = require("../middleware/jwt.middleware");
+
 
 
 router.get("/", async(req,res, next) => {
@@ -29,7 +29,7 @@ router.post("/:clinicId", async (req, res, next) => {
         const booking = await Booking.create(newBooking);
         res.status(201).json(booking)
     } catch (err) {
-        console.log(err)
+        next(err)
     }
 })
 

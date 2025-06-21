@@ -28,7 +28,7 @@ router.get("/:clinicId", async(req,res, next) => {
         const clinic = await Clinic.findById(clinicId);
         res.status(200).json(clinic)
     } catch (err) {
-        console.log(err)
+        next(err);
     }
 });
 
@@ -40,7 +40,7 @@ router.post("/:clinicId/booking", async(req,res, next) => {
         const newClinic = await Clinic.create(req.body);
         res.status(201).json(newClinic)
     } catch (err) {
-        console.log(err)
+        next(err);
     }
 });
 
