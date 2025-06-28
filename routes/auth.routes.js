@@ -77,6 +77,7 @@ router.post("/signup", (req, res, next) => {
 // POST  /auth/login - Verifies email and password and returns a JWT
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.body)
 
   // Check if email or password are provided as empty string
   if (email === "" || password === "") {
@@ -96,6 +97,8 @@ router.post("/login", (req, res, next) => {
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
 
+      console.log("pwd correct:", passwordCorrect)
+
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
         const { _id, email, name } = foundUser;
@@ -112,6 +115,7 @@ router.post("/login", (req, res, next) => {
         // Send the token as the response
         res.status(200).json({ authToken: authToken });
       } else {
+        console.log("pwd correct:", passwordCorrect)
         res.status(401).json({ message: "Unable to authenticate the user" });
       }
     })

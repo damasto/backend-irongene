@@ -17,6 +17,9 @@ router.post("/:clinicId", async (req, res, next) => {
     const { clinicId } = req.params;
     const { _id } = req.payload
     const { date, timeSlot } = req.body;
+    console.log()
+
+    console.log(_id)
 
     const newBooking = {
         clinic: clinicId,
