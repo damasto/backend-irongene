@@ -27,6 +27,12 @@ router.post("/signup", (req, res, next) => {
     return;
   }
 
+  const nameRegex = /^[\p{L}'\- ]+$/u;
+        if(!nameRegex.test(firstName) || !nameRegex.test(lastName) ) {
+          res.status(400).json({message: "Numbers or special characters are not allowed for name and last name"})
+            return
+        }
+
   // This regular expression check that the email is of a valid format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(email)) {

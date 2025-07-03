@@ -5,11 +5,7 @@ const clinicSchema = new Schema (
         "clinicName": String,
         "clinicSlug": String,
         "description": String,
-        "location": String,
-        "image": {
-            type: String,
-            default: ""
-        }
+        "location": String
     }
 )
 

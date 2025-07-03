@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../models/User.model");
 const Booking = require("../models/Booking.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 
 router.get("/", async(req, res, next) => { 
@@ -14,12 +16,30 @@ router.get("/", async(req, res, next) => {
     }
 })
 
-router.get("/profile", isAuthenticated ,async(req, res, next) => { 
-    
+router.get("/profile", isAuthenticated ,async(req, res, next) => {     
     const {_id} = req.payload;
 
-    console.log("req.payload:",req.payload)
+    try {
+        const user = await User.findById(_id).select("firstName lastName email");
+        res.status(200).json(user)
+    } catch(err) {
+        next(err)
+    }
+})
 
+router.get("/profile/bookings", isAuthenticated, async(req, res, next) => { 
+    const {_id} = req.payload;
+  
+    try {
+        const bookings = await Booking.find({user: _id}).populate("clinic");
+        res.status(200).json(bookings)
+    } catch(err) {
+        next(err)
+    }
+});
+
+router.get("/profile", isAuthenticated ,async(req, res, next) => {     
+    const {_id} = req.payload;
 
     try {
         const user = await User.findById(_id).select("firstName lastName email");
@@ -40,7 +60,65 @@ router.get("/profile/:userId/bookings", async(req, res, next) => {
     } catch(err) {
         next(err)
     }
+});
+
+router.put("/profile/email", isAuthenticated, async(req, res, next) => {     
+    const {_id} = req.payload;
+    const {newEmail, enteredPassword} = req.body
+
+    try {
+        const user = await User.findById(_id).select("password");
+        const password = user.password
+        console.log(password)
+        const passwordCorrect = bcrypt.compareSync(enteredPassword, password);
+
+        if (passwordCorrect) {
+            const updatedEmail = await User.findByIdAndUpdate(_id, { email: newEmail });
+            console.log(updatedEmail)
+            res.status(200).json(updatedEmail);
+        } else {
+            res.status(401).json({message:"Password did not match"})
+        }
+    } catch (err) {
+        next(err)
+    }
+});
+
+router.put("/profile/password", isAuthenticated, async(req, res, next) => {     
+    const {_id} = req.payload;
+    const {currentPassword, newPassword} = req.body
+
+    try {
+        const user = await User.findById(_id).select("password");
+        const password = user.password
+        console.log(password)
+        const passwordCorrect = bcrypt.compareSync(currentPassword, password);
+
+        if (passwordCorrect) {
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const hashedPassword = bcrypt.hashSync(newPassword, salt);
+            const updatedPassword = await User.findByIdAndUpdate(_id, { password: hashedPassword });
+            res.status(200).json({message: "Password successfully updated"});
+        } else {
+            res.status(401).json({message:"Password did not match"})
+        }
+    } catch (err) {
+        next(err)
+    }
+});
+
+router.delete("/profile", isAuthenticated, async (req, res, next) => {
+    const {_id} = req.payload
+
+    try {
+        const deleteUser = await User.findByIdAndDelete(_id)
+        res.status(200).json({message: "Account successfully deleted"})
+    } catch(err) {
+        next(err)
+    }
 })
+
+
 
 
 module.exports = router;
