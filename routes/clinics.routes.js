@@ -20,6 +20,27 @@ router.post("/", async(req,res, next) => {
     }
 });
 
+router.put("/:clinicId", async (req, res, next) => {
+    const {clinicId} = req.params
+    const update = req.body
+
+    try {
+        if(update.hasOwnProperty("procedures")) {
+            const updateProcedures = await Clinic.findByIdAndUpdate(
+                clinicId,
+                {$addToSet: {procedures: {$each: update.procedures}}},
+                {new: true, runValidators: true}
+            )
+            res.status(200).json(updateProcedures)
+        } else {
+            const updateProcedures = await Clinic.findByIdAndUpdate(clinicId, update, {new: true})
+            res.status(200).json(updateProcedures)
+        }
+    } catch(err) {
+        next(err)
+    }
+})
+
 router.get("/:clinicId", async(req,res, next) => {
 
     const {clinicId} = req.params
