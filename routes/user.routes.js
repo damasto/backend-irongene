@@ -118,8 +118,9 @@ router.delete("/profile", isAuthenticated, async (req, res, next) => {
     try {
         const deleteUser = await User.findByIdAndDelete(_id);
         const userBookings = await Booking.deleteMany({user: _id})
-        res.status(200).json({message: "Account successfully deleted"})
         console.log(userBookings, " deleted")
+        res.status(200).json({message: "Account successfully deleted"})
+        
     } catch(err) {
         next(err)
     }
