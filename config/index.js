@@ -15,7 +15,9 @@ const cors = require("cors");
 
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:5173";
 
-const allowedOrigins = [ "http://localhost:5173","https://irongene.netlify.app" ]
+const allowedOrigins = [ 
+  "http://localhost:5173",
+  "https://irongene.netlify.app" ]
 
 // Middleware configuration
 module.exports = (app) => {

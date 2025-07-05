@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const Booking = require("../models/Booking.model");
+const mongoose = require("mongoose")
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -110,9 +111,15 @@ router.put("/profile/password", isAuthenticated, async(req, res, next) => {
 router.delete("/profile", isAuthenticated, async (req, res, next) => {
     const {_id} = req.payload
 
+    if(!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(400).json({message: "Invalid ID format"})
+    }
+
     try {
-        const deleteUser = await User.findByIdAndDelete(_id)
+        const deleteUser = await User.findByIdAndDelete(_id);
+        const userBookings = await Booking.deleteMany({user: _id})
         res.status(200).json({message: "Account successfully deleted"})
+        console.log(userBookings, " deleted")
     } catch(err) {
         next(err)
     }
