@@ -2,10 +2,23 @@ const {Schema, model} = require("mongoose")
 
 const clinicSchema = new Schema (
     {
-        "clinicName": String,
-        "clinicSlug": String,
-        "description": String,
-        "location": String,
+        "clinicName": {
+            type: String,
+            required: true
+        },
+        "clinicSlug":  {
+            type: String,
+            required: true
+        },
+        "description":  {
+            type: String,
+            default: "",
+            required: true
+        },
+        "location":  {
+            type: String,
+            required: true
+        },
         "speciality": {
             type: String,
             enum: ["Neurogentic Integration & Implantation", "Synthetics Engineering", "Morphogentic Architecture"]

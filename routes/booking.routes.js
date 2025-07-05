@@ -16,8 +16,8 @@ router.get("/", async(req,res, next) => {
 router.post("/:clinicId", async (req, res, next) => {
     const { clinicId } = req.params;
     const { _id } = req.payload
-    const { date, timeSlot } = req.body;
-    console.log()
+    const { date, timeSlot, procedure } = req.body;
+    console.log("body", req.body)
 
     console.log(_id)
 
@@ -26,6 +26,7 @@ router.post("/:clinicId", async (req, res, next) => {
         user: _id,
         date: date,
         timeSlot: timeSlot,
+        procedure: procedure
     }
 
     try {

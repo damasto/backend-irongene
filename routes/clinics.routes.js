@@ -53,6 +53,20 @@ router.get("/:clinicId", async(req,res, next) => {
     }
 });
 
+router.get("/:clinicId/procedures", async(req,res, next) => {
+
+    const {clinicId} = req.params
+
+
+    try {
+        const procedures = await Clinic.findById(clinicId).select("procedures");
+        console.log(procedures)
+        res.status(200).json(procedures)
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.post("/:clinicId/booking", async(req,res, next) => {
 
     const {clinicId} = req.params;
