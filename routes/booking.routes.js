@@ -35,6 +35,27 @@ router.post("/:clinicId", async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+});
+
+router.put("/:bookingId", async(req, res, next) => {
+    const {bookingId} = req.params;
+    const update = req.body;
+    
+    if(!mongoose.Types.ObjectId.isValid(bookingId)) {
+            return res.status(400).json({message: "Invalid ID format"})
+        }
+    
+    try {
+        const updatedBooking = await Booking.findByIdAndUpdate(bookingId, update, {new: true})
+        
+        if(!updatedBooking) {
+            res.status(400).json({message: "Booking not found"})
+        }
+
+        res.status(200).json(updateBooking)
+    } catch(err) {
+        next(err)
+    }
 })
 
 module.exports = router
