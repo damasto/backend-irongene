@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Booking = require("../models/Booking.model");
+const mongoose = require("mongoose")
 
 
 
@@ -47,7 +48,7 @@ router.put("/:bookingId", async(req, res, next) => {
     
     try {
         const updatedBooking = await Booking.findByIdAndUpdate(bookingId, update, {new: true})
-        
+
         if(!updatedBooking) {
             res.status(400).json({message: "Booking not found"})
         }
