@@ -53,7 +53,7 @@ router.put("/:bookingId", async(req, res, next) => {
             res.status(400).json({message: "Booking not found"})
         }
 
-        res.status(200).json(updateBooking)
+        res.status(200).json(updatedBooking)
     } catch(err) {
         next(err)
     }
