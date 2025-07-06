@@ -59,4 +59,25 @@ router.put("/:bookingId", async(req, res, next) => {
     }
 })
 
+router.delete("/:bookingId", async(req, res, next) => {
+    const {bookingId} = req.params;
+    
+    if(!mongoose.Types.ObjectId.isValid(bookingId)) {
+            return res.status(400).json({message: "Invalid ID format"})
+        }
+    
+    try {
+        const deleteBooking = await Booking.findByIdAndDelete(bookingId)
+
+        if(!deleteBooking) {
+            res.status(400).json({message: "Booking not found"})
+        }
+
+        res.status(200).json({message: "Booking has been deleted"})
+    } catch(err) {
+        next(err)
+    }
+})
+
+
 module.exports = router
