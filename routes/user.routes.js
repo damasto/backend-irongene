@@ -17,6 +17,17 @@ router.get("/", async(req, res, next) => {
     }
 })
 
+router.get("/user/profile", isAuthenticated ,async(req, res, next) => {     
+    const {_id} = req.payload;
+
+    try {
+        const user = await User.findById(_id).select("role");
+        res.status(200).json(user)
+    } catch(err) {
+        next(err)
+    }
+})
+
 router.get("/profile", isAuthenticated ,async(req, res, next) => {     
     const {_id} = req.payload;
 
@@ -38,17 +49,6 @@ router.get("/profile/bookings", isAuthenticated, async(req, res, next) => {
         next(err)
     }
 });
-
-router.get("/profile", isAuthenticated ,async(req, res, next) => {     
-    const {_id} = req.payload;
-
-    try {
-        const user = await User.findById(_id).select("firstName lastName email");
-        res.status(200).json(user)
-    } catch(err) {
-        next(err)
-    }
-})
 
 router.get("/profile/:userId/bookings", async(req, res, next) => { 
     
