@@ -17,7 +17,7 @@ router.get("/", async(req, res, next) => {
     }
 })
 
-router.get("/user/profile", isAuthenticated ,async(req, res, next) => {     
+router.get("/user/role", isAuthenticated ,async(req, res, next) => {     
     const {_id} = req.payload;
 
     try {
