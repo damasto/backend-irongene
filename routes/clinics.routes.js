@@ -13,7 +13,8 @@ router.get("/", async(req,res, next) => {
 });
 
 router.post("/", async(req,res, next) => {
-  
+    const {clincName} = req.body
+    
     try {
         const clinicFound = await Clinic.findOne({clinicName});
         console.log("found", clinicFound)
