@@ -13,8 +13,15 @@ router.get("/", async(req,res, next) => {
 });
 
 router.post("/", async(req,res, next) => {
+  
     try {
-        const newClinic = await Clinic.create(req.body);
+        const clinicFound = await Clinic.findOne({clinicName});
+        console.log("found", clinicFound)
+        if(clinicFound) {
+            res.status(400).json({message: "Clinic already exists"})
+            return
+        }
+        const newClinic = await Clinic.create(req.body)
         res.status(201).json(newClinic)
     } catch (err) {
         console.log(err)
