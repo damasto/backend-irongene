@@ -126,7 +126,7 @@ router.delete("/profile", isAuthenticated, async (req, res, next) => {
     }
 })
 
-router.delete("/:userId", async () => {
+router.delete("/:userId", async (req, res, next) => {
     const {userId} = req.params
 
     try {
