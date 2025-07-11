@@ -10,7 +10,7 @@ const saltRounds = 10;
 
 router.get("/", async(req, res, next) => { 
     try {
-        const users = await User.find();
+        const users = await User.find().select({createdAt:0, updatedAt:0, __v: 0});
         res.status(200).json(users)
     } catch(err) {
         next(err)
