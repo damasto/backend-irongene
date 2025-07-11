@@ -19,8 +19,8 @@ router.post("/", async(req,res, next) => {
         const clinicFound = await Clinic.findOne({clinicName});
         console.log("found", clinicFound)
         if(clinicFound) {
-            res.status(400).json({message: "Clinic already exists"})
-            return
+         return res.status(400).json({message: "Clinic already exists"})
+            
         }
         const newClinic = await Clinic.create(req.body)
         res.status(201).json(newClinic)
@@ -28,6 +28,17 @@ router.post("/", async(req,res, next) => {
         console.log(err)
     }
 });
+
+router.delete("/", async (req, res, next) => {
+    const {clinicName} = req.body
+
+    try{
+        const deleted = await Clinic.deleteMany({clinicName: clinicName})
+        res.status(200).json(deleted)
+    } catch (err) {
+        next(err)
+    }
+})
 
 router.put("/:clinicId", async (req, res, next) => {
     const {clinicId} = req.params
