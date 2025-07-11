@@ -17,6 +17,28 @@ router.get("/", async(req, res, next) => {
     }
 })
 
+router.delete("/:userId", async (req, res, next) => {
+    const {userId} = req.params
+
+    try {
+        const deletedUser = await User.findByIdAndDelete(userId)
+        res.status(200).json({message: "User successfully deleted"})
+    } catch(err) {
+        next(err)
+    }
+})
+
+router.put("/:userId", async(req, res, next) => {
+    const {userId} = req.params
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, req.body, {new: true, runValidators: true});
+        res.status(200).json(updatedUser)
+    } catch(err) {
+        next(err)
+    }
+})
+
 router.get("/user/role", isAuthenticated ,async(req, res, next) => {     
     const {_id} = req.payload;
 
@@ -126,16 +148,6 @@ router.delete("/profile", isAuthenticated, async (req, res, next) => {
     }
 })
 
-router.delete("/:userId", async (req, res, next) => {
-    const {userId} = req.params
-
-    try {
-        const deletedUser = await User.findByIdAndDelete(userId)
-        res.status(200).json({message: "User successfully deleted"})
-    } catch(err) {
-        next(err)
-    }
-})
 
 
 
