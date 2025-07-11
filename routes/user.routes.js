@@ -126,6 +126,17 @@ router.delete("/profile", isAuthenticated, async (req, res, next) => {
     }
 })
 
+router.delete("/:userId", async () => {
+    const {userId} = req.params
+
+    try {
+        const res = await User.findByIdAndDelete(userId)
+        res.status(200).json({message: "User successfully deleted"})
+    } catch(err) {
+        next(err)
+    }
+})
+
 
 
 
