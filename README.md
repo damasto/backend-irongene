@@ -32,16 +32,16 @@ project/root
 
 Create a `.env` file in the root of the project with the following keys:
 
-PORT= # The port your server will run on (e.g., 5000)
-- ORIGIN= # Your frontend origin for CORS (e.g., http://localhost:3000)
-- TOKEN_SECRET= # Secret key used for signing JWTs
-- MONGODB_URI= # MongoDB connection string
+- PORT=  The port your server will run on (e.g., 5000)
+- ORIGIN= Your frontend origin for CORS (e.g., http://localhost:3000)
+- TOKEN_SECRET= Secret key used for signing JWTs
+- MONGODB_URI= MongoDB connection string
 
 ## Setup Instructions
 
 1. **Clone the repository**  
-   git clone <repo-url>
-   cd <project-folder>
+   git clone (https://github.com/damasto/backend-irongene)
+   cd <backend-irongene>
 2. **Install dependencies**
     npm install
 3. **Create .env file**
@@ -51,12 +51,14 @@ PORT= # The port your server will run on (e.g., 5000)
 
 ## API Structure
 
+<pre>
 routes/
 ├── auth.routes.js         # Login, signup, token validation
 ├── users.routes.js        # User management (CRUD)
 ├── clinics.routes.js      # Clinics-related endpoints
 ├── booking.routes.js      # Booking-related endpoints
 └── index.routes.js        # Main router that aggregates all routes that use /api
+</pre>
 
 ## Security
 
@@ -72,6 +74,6 @@ routes/
 
 - [Presentation](https://docs.google.com/presentation/d/1d0hfJZPVnNRZYv-HnW_q43bWVexoFsWzaCw5zV3biEI/edit?usp=sharing)
 - [Github-repository Frontend](https://github.com/damasto/irongene)
-- [Github-repository Backend](https://github.com/angeleVG/magic-shop-backend)
+- [Github-repository Backend](https://github.com/damasto/backend-irongene)
 - [Deployment Frontend](https://irongene.netlify.app/)
 - [Deployment Backend](https://irongene-api.onrender.com)
