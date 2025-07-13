@@ -32,7 +32,7 @@ project/root
 
 Create a `.env` file in the root of the project with the following keys:
 
-- PORT= # The port your server will run on (e.g., 5000)
+PORT= # The port your server will run on (e.g., 5000)
 - ORIGIN= # Your frontend origin for CORS (e.g., http://localhost:3000)
 - TOKEN_SECRET= # Secret key used for signing JWTs
 - MONGODB_URI= # MongoDB connection string
